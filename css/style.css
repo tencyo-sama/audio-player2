@@ -1,0 +1,116 @@
+/* CSS Variables for theme */
+:root {
+    --navbar-height: 56px;
+    --controls-height: 190px;
+}
+
+body {
+    overflow-x: hidden;
+    touch-action: manipulation; /* Prevent double-tap zoom on iOS */
+}
+
+/* Ensure navbar stays on top */
+.navbar {
+    height: var(--navbar-height);
+    z-index: 1050;
+}
+
+/* Main Container: take up remaining space minus controls */
+#mediaContainer {
+    margin-top: var(--navbar-height);
+    /* Dynamically sized via --controls-height so collapsing settings expands video area */
+    height: calc(100dvh - var(--navbar-height) - var(--controls-height, 190px)); 
+    min-height: 160px;
+    object-fit: contain;
+    transition: height 0.15s ease-out;
+}
+
+/* Video specific styling to stay within container */
+video {
+    object-fit: contain;
+    background-color: black;
+}
+
+/* Controls Area container */
+#controlsArea {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.5);
+    /* Safe Area Insets for modern phones (iPhone notch/home indicator) */
+    padding-bottom: env(safe-area-inset-bottom, 1rem) !important;
+}
+
+/* Custom rounded circular buttons */
+.play-btn {
+    width: 64px;
+    height: 64px;
+    font-size: 2rem;
+}
+
+.play-btn-sm {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+}
+
+.control-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+}
+
+.control-btn-sm {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+}
+
+/* Active states for info buttons */
+.btn-outline-info.active {
+    background-color: #0dcaf0;
+    color: #000;
+}
+
+/* Input Range Slider Customization (Bootstrap overrides for better touch targets) */
+input[type=range] {
+    height: 1.5rem;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-top: -0.4rem;
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+/* Visualizer animation */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 20px rgba(13, 110, 253, 0.8); }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+
+.is-playing #musicIcon {
+    animation: pulse 0.8s infinite ease-in-out alternate;
+}
+
+/* Utility to ensure text doesn't select on buttons */
+.btn, label, span {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Hide browser number spinners on BPM input for clean mobile display */
+#inputBpm::-webkit-outer-spin-button,
+#inputBpm::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#inputBpm {
+    -moz-appearance: textfield;
+}
